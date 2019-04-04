@@ -10,12 +10,14 @@ RUN apt-get update && \
     git \
     unzip \
     librabbitmq-dev \
-    libssh-dev
+    libssh-dev \
+    libpq-dev
 
 RUN curl -sS https://getcomposer.org/installer | php -- --install-dir=/usr/local/bin --filename=composer && \
     composer --version
 
 RUN pecl install amqp xdebug && \
+    docker-php-ext-install pdo_pgsql && \
     docker-php-ext-enable amqp xdebug
 
 WORKDIR /app

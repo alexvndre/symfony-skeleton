@@ -16,3 +16,13 @@ services:
     ports:
       - "15672:15672"
       - "5672:5672"
+
+  db:
+    image: postgres:11
+    restart: always
+    environment:
+        - POSTGRES_DB=app
+        - POSTGRES_USER=root
+        - POSTGRES_PASSWORD=root
+    ports:
+        - 5432:5432
