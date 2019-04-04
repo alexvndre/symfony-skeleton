@@ -4,16 +4,19 @@ LABEL version="0.1"
 LABEL maintainer="Alexandre Vallot <alexandre.vallot@gmail.com>"
 LABEL maintainer="Kévin Pires <pires.kev@gmail.com>"
 
-# Install composer
 RUN apt-get update && \
-    apt-get install -y openssl git unzip
+    apt-get install -y \
+    openssl \
+    git \
+    unzip \
+    librabbitmq-dev \
+    libssh-dev
 
 RUN curl -sS https://getcomposer.org/installer | php -- --install-dir=/usr/local/bin --filename=composer && \
     composer --version 
 
-# Install and enable xDebug
-RUN pecl install xdebug && \
-    docker-php-ext-enable xdebug
+RUN pecl install amqp xdebug && \
+    docker-php-ext-enable amqp xdebug
 
 WORKDIR /app
 

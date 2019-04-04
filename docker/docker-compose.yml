@@ -3,9 +3,16 @@ version: '3'
 services:
   php-fpm:
     build: ./php-fpm
-    container_name: php-fpm
+    container_name: app-php-fpm
     working_dir: /app
     ports:
       - "9000:9000"
     volumes:
       - ./:/app:rw,cached
+  
+  rabbitmq:
+    image: rabbitmq:3-management
+    container_name: app-rabbitmq
+    ports:
+      - "15672:15672"
+      - "5672:5672"
