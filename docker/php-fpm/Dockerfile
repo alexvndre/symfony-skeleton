@@ -13,7 +13,7 @@ RUN apt-get update && \
     libssh-dev
 
 RUN curl -sS https://getcomposer.org/installer | php -- --install-dir=/usr/local/bin --filename=composer && \
-    composer --version 
+    composer --version
 
 RUN pecl install amqp xdebug && \
     docker-php-ext-enable amqp xdebug

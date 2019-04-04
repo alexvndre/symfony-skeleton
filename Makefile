@@ -1,3 +1,6 @@
+bash:
+	docker exec -it app-php-fpm bash
+
 build:
 	docker-compose -f docker/docker-compose.yml build
 
