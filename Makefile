@@ -7,10 +7,15 @@ build:
 build-no-cache:
 	docker-compose -f docker/docker-compose.yml build --no-cache
 
+cache-clear:
+	docker exec -it app-php-fpm bin/console cache:clear
+
 ps:
 	docker-compose -f docker/docker-compose.yml ps
 
-run:
+restart: stop start
+
+start:
 	docker-compose -f docker/docker-compose.yml up -d
 
 stop:

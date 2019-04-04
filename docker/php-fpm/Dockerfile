@@ -6,18 +6,21 @@ LABEL maintainer="Kévin Pires <pires.kev@gmail.com>"
 
 RUN apt-get update && \
     apt-get install -y \
-    openssl \
-    git \
-    unzip \
-    librabbitmq-dev \
-    libssh-dev \
-    libpq-dev
+        openssl \
+        git \
+        unzip \
+        librabbitmq-dev \
+        libssh-dev \
+        libpq-dev
 
 RUN curl -sS https://getcomposer.org/installer | php -- --install-dir=/usr/local/bin --filename=composer && \
     composer --version
 
 RUN pecl install amqp xdebug && \
-    docker-php-ext-install pdo_pgsql && \
+    docker-php-ext-install \
+        bcmath \
+        pdo_pgsql \
+        sockets && \
     docker-php-ext-enable amqp xdebug
 
 WORKDIR /app

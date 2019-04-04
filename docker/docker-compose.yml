@@ -9,6 +9,11 @@ services:
       - "9000:9000"
     volumes:
       - ./../:/app:rw,cached
+    env_file:
+      - ../.env
+    depends_on:
+      - db
+      - rabbitmq
   
   rabbitmq:
     image: rabbitmq:3-management
@@ -19,6 +24,7 @@ services:
 
   db:
     image: postgres:11
+    container_name: app-db
     restart: always
     environment:
         - POSTGRES_DB=app
