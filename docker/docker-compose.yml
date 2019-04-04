@@ -1,0 +1,11 @@
+version: '3'
+
+services:
+  php-fpm:
+    build: ./php-fpm
+    container_name: php-fpm
+    working_dir: /app
+    ports:
+      - "9000:9000"
+    volumes:
+      - ./:/app:rw,cached
