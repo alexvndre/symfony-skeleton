@@ -14,7 +14,7 @@ cp .env.dist .env
 make build
 ```
 
-3. Start the containers.
+3. Start the containers and import RabbitMQ configuration.
 
 ```bash
 make start
