@@ -1,3 +1,4 @@
+PROJECT_NAME = app
 HELP_FUN = \
 	%help; \
     while(<>) { \
@@ -11,8 +12,8 @@ HELP_FUN = \
         print "\n"; \
     }
 
-bash: ## Access to bash app_php_fpm container
-	docker exec -it app_php_fpm bash
+bash: ## Access to bash ${PROJECT_NAME}_php_fpm container
+	docker exec -it ${PROJECT_NAME}_php_fpm bash
 
 build: ## Build the containers
 	docker-compose -f docker/docker-compose.yml build
@@ -21,10 +22,10 @@ build-no-cache: ## Build the containers without a cache
 	docker-compose -f docker/docker-compose.yml build --no-cache
 
 cache-clear: ## Clear the symfony cache
-	docker exec -it app_php_fpm bin/console cache:clear
+	docker exec -it ${PROJECT_NAME}_php_fpm bin/console cache:clear
 
 consume-my-consumer: ## Consume a queue
-	docker exec -it app_php_fpm bin/console swarrot:consume:my_consumer queue_name
+	docker exec -it ${PROJECT_NAME}_php_fpm bin/console swarrot:consume:my_consumer queue_name
 
 help: ## List commands with help
 	@perl -e '$(HELP_FUN)' $(MAKEFILE_LIST)
@@ -36,7 +37,7 @@ restart: cache-clear stop start ## Stop and start the volumes
 
 start: ## Start volumes and configure RabbitMQ
 	docker-compose -f docker/docker-compose.yml up -d
-	docker exec -it app_php_fpm vendor/bin/rabbit vhost:mapping:create rabbitmq_default_vhost.yml --host=app_rabbitmq
+	docker exec -it ${PROJECT_NAME}_php_fpm vendor/bin/rabbit vhost:mapping:create rabbitmq_default_vhost.yml --host=${PROJECT_NAME}_rabbitmq
 
 stop: ## Stop voumes
 	docker-compose -f docker/docker-compose.yml stop
